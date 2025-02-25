@@ -71,6 +71,7 @@
    - 思考プロセスの視覚的な表現方法
    - max_tokensはthinking.budget_tokensよりも大きい値に設定する必要がある
    - THINKING_BUDGET_TOKENSを4000に、max_tokensを16000に設定
+   - Extended Thinking使用時はtemperatureを1.0に設定する必要がある
 
 ## 進行中の議論
 1. **モデル選択**

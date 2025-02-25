@@ -85,7 +85,7 @@ npm run lint:fix
 ### Anthropic API
 - モデル: claude-3-7-sonnet-20250219（最新の適切なモデル）
 - 最大トークン: 16000
-- 温度: 0.7（デフォルト値）
+- 温度: 1.0（Extended Thinking使用時は必ず1.0に設定する必要がある）
 - トップP: 0.9（デフォルト値）
 - Extended Thinking: 有効化
   - budget_tokens: 4000

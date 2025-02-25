@@ -85,7 +85,7 @@ export const anthropicService = {
         messages,
         system: SYSTEM_PROMPT,
         max_tokens: 16000,
-        temperature: 0.7,
+        temperature: 1.0, // Extended Thinking使用時は必ず1.0に設定する必要がある
         thinking: {
           type: 'enabled',
           budget_tokens: THINKING_BUDGET_TOKENS,
