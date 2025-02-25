@@ -1,4 +1,4 @@
-import { openDB, DBSchema, IDBPDatabase } from 'idb';
+import { DBSchema, IDBPDatabase, openDB } from 'idb';
 import { Chat, Message } from '../../types';
 
 /**
@@ -86,13 +86,11 @@ export const dbService = {
     const db = await getDB();
     // チャットの削除
     await db.delete('chats', id);
-    
+
     // 関連するメッセージの削除
     const messages = await this.getMessagesByChat(id);
     const tx = db.transaction('messages', 'readwrite');
-    await Promise.all(
-      messages.map((message) => tx.store.delete(message.id))
-    );
+    await Promise.all(messages.map((message) => tx.store.delete(message.id)));
     await tx.done;
   },
 

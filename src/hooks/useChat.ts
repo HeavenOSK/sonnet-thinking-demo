@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Chat, Message } from '../types';
+import { useCallback, useEffect, useState } from 'react';
 import { chatService } from '../services/chat';
+import { Chat, Message } from '../types';
 
 /**
  * チャット機能を使用するためのカスタムフック
@@ -53,7 +53,7 @@ export function useChat() {
     try {
       setLoading(true);
       const newChat = await chatService.createChat(title);
-      setChats(prevChats => [...prevChats, newChat]);
+      setChats((prevChats) => [...prevChats, newChat]);
       setCurrentChat(newChat);
       setMessages([]);
       setError(null);
@@ -70,88 +70,107 @@ export function useChat() {
   /**
    * チャットを選択
    */
-  const selectChat = useCallback(async (chatId: string) => {
-    try {
-      setLoading(true);
-      const chat = await chatService.getChat(chatId);
-      if (chat) {
-        setCurrentChat(chat);
-        await fetchMessages(chatId);
-      } else {
-        setError('指定されたチャットが見つかりません。');
+  const selectChat = useCallback(
+    async (chatId: string) => {
+      try {
+        setLoading(true);
+        const chat = await chatService.getChat(chatId);
+        if (chat) {
+          setCurrentChat(chat);
+          await fetchMessages(chatId);
+        } else {
+          setError('指定されたチャットが見つかりません。');
+        }
+      } catch (err) {
+        console.error('チャット選択エラー:', err);
+        setError('チャットの選択中にエラーが発生しました。');
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error('チャット選択エラー:', err);
-      setError('チャットの選択中にエラーが発生しました。');
-    } finally {
-      setLoading(false);
-    }
-  }, [fetchMessages]);
+    },
+    [fetchMessages],
+  );
 
   /**
    * チャットのタイトルを更新
    */
-  const updateChatTitle = useCallback(async (chatId: string, title: string) => {
-    try {
-      setLoading(true);
-      const updatedChat = await chatService.updateChatTitle(chatId, title);
-      setChats(prevChats => 
-        prevChats.map(chat => chat.id === chatId ? updatedChat : chat)
-      );
-      if (currentChat?.id === chatId) {
-        setCurrentChat(updatedChat);
+  const updateChatTitle = useCallback(
+    async (chatId: string, title: string) => {
+      try {
+        setLoading(true);
+        const updatedChat = await chatService.updateChatTitle(chatId, title);
+        setChats((prevChats) =>
+          prevChats.map((chat) => (chat.id === chatId ? updatedChat : chat)),
+        );
+        if (currentChat?.id === chatId) {
+          setCurrentChat(updatedChat);
+        }
+        setError(null);
+      } catch (err) {
+        console.error('チャットタイトル更新エラー:', err);
+        setError('チャットタイトルの更新中にエラーが発生しました。');
+      } finally {
+        setLoading(false);
       }
-      setError(null);
-    } catch (err) {
-      console.error('チャットタイトル更新エラー:', err);
-      setError('チャットタイトルの更新中にエラーが発生しました。');
-    } finally {
-      setLoading(false);
-    }
-  }, [currentChat]);
+    },
+    [currentChat],
+  );
 
   /**
    * チャットを削除
    */
-  const deleteChat = useCallback(async (chatId: string) => {
-    try {
-      setLoading(true);
-      await chatService.deleteChat(chatId);
-      setChats(prevChats => prevChats.filter(chat => chat.id !== chatId));
-      if (currentChat?.id === chatId) {
-        setCurrentChat(null);
-        setMessages([]);
+  const deleteChat = useCallback(
+    async (chatId: string) => {
+      try {
+        setLoading(true);
+        await chatService.deleteChat(chatId);
+        setChats((prevChats) => prevChats.filter((chat) => chat.id !== chatId));
+        if (currentChat?.id === chatId) {
+          setCurrentChat(null);
+          setMessages([]);
+        }
+        setError(null);
+      } catch (err) {
+        console.error('チャット削除エラー:', err);
+        setError('チャットの削除中にエラーが発生しました。');
+      } finally {
+        setLoading(false);
       }
-      setError(null);
-    } catch (err) {
-      console.error('チャット削除エラー:', err);
-      setError('チャットの削除中にエラーが発生しました。');
-    } finally {
-      setLoading(false);
-    }
-  }, [currentChat]);
+    },
+    [currentChat],
+  );
 
   /**
    * メッセージを送信
    */
-  const sendMessage = useCallback(async (message: string) => {
-    if (!currentChat) {
-      setError('チャットが選択されていません。');
-      return;
-    }
+  const sendMessage = useCallback(
+    async (message: string) => {
+      if (!currentChat) {
+        setError('チャットが選択されていません。');
+        return;
+      }
 
-    try {
-      setLoading(true);
-      const [userMessage, assistantMessage] = await chatService.sendMessage(currentChat.id, message);
-      setMessages(prevMessages => [...prevMessages, userMessage, assistantMessage]);
-      setError(null);
-    } catch (err) {
-      console.error('メッセージ送信エラー:', err);
-      setError('メッセージの送信中にエラーが発生しました。');
-    } finally {
-      setLoading(false);
-    }
-  }, [currentChat]);
+      try {
+        setLoading(true);
+        const [userMessage, assistantMessage] = await chatService.sendMessage(
+          currentChat.id,
+          message,
+        );
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          userMessage,
+          assistantMessage,
+        ]);
+        setError(null);
+      } catch (err) {
+        console.error('メッセージ送信エラー:', err);
+        setError('メッセージの送信中にエラーが発生しました。');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [currentChat],
+  );
 
   // 初期化時に全てのチャットを取得
   useEffect(() => {
