@@ -21,7 +21,7 @@ export interface Message {
   chatId: string;
   role: MessageRole;
   content: string;
-  thinking?: string; // assistantメッセージの場合のみ
+  contentBlocks?: ContentBlock[]; // assistantメッセージの場合のみ、構造化されたコンテンツブロック
   timestamp: Date;
 }
 
@@ -36,16 +36,43 @@ export type NewChat = Omit<Chat, 'id' | 'createdAt' | 'updatedAt'>;
 export type NewMessage = Omit<Message, 'id' | 'timestamp'>;
 
 /**
+ * Anthropic APIのコンテンツブロック型
+ */
+export type ContentBlock = TextBlock | ThinkingBlock | RedactedThinkingBlock;
+
+/**
+ * テキストブロック型
+ */
+export interface TextBlock {
+  type: 'text';
+  text: string;
+}
+
+/**
+ * Thinking（思考）ブロック型
+ */
+export interface ThinkingBlock {
+  type: 'thinking';
+  thinking: string;
+  signature: string;
+}
+
+/**
+ * 編集されたThinking（思考）ブロック型
+ */
+export interface RedactedThinkingBlock {
+  type: 'redacted_thinking';
+  data: string;
+}
+
+/**
  * Anthropic APIのレスポンス型
  */
 export interface AnthropicResponse {
   id: string;
   type: string;
   role: string;
-  content: Array<{
-    type: string;
-    text: string;
-  }>;
+  content: ContentBlock[];
   model: string;
   stop_reason: string | null;
   stop_sequence: string | null;
@@ -53,5 +80,4 @@ export interface AnthropicResponse {
     input_tokens: number;
     output_tokens: number;
   };
-  thinking?: string; // thinking機能で取得した思考プロセス
 }
