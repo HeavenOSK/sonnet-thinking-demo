@@ -63,7 +63,7 @@ export function AIMessage({ message }: AIMessageProps) {
       </div>
 
       {/* メッセージ内容 */}
-      <div className="flex-1">
+      <div className="max-w-full flex-1 overflow-hidden">
         <div className="mb-1 font-semibold text-gray-700 text-sm dark:text-gray-300">
           Claude
         </div>

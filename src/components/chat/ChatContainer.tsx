@@ -46,7 +46,7 @@ export function ChatContainer({
       </div>
 
       {/* メッセージリスト */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="max-w-full flex-1 overflow-y-auto p-4">
         {!hasApiKey ? (
           <div className="flex h-full items-center justify-center">
             <div className="max-w-md rounded-lg border border-yellow-200 bg-yellow-50 p-6 text-center dark:border-yellow-900 dark:bg-yellow-900/10">

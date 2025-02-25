@@ -20,7 +20,7 @@ export function ThinkingSection({ thinkingBlocks }: ThinkingSectionProps) {
     .join('\n\n');
 
   return (
-    <div className="mt-3 rounded-lg border border-purple-200 bg-purple-50 p-3 dark:border-purple-900 dark:bg-purple-900/10">
+    <div className="mt-3 max-w-full rounded-lg border border-purple-200 bg-purple-50 p-3 dark:border-purple-900 dark:bg-purple-900/10">
       <div className="mb-2 flex items-center font-medium text-purple-700 text-sm dark:text-purple-300">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@ export function ThinkingSection({ thinkingBlocks }: ThinkingSectionProps) {
         </svg>
         思考プロセス
       </div>
-      <div className="whitespace-pre-wrap text-purple-800 text-sm dark:text-purple-200">
+      <div className="overflow-auto whitespace-pre-wrap text-purple-800 text-sm dark:text-purple-200">
         {thinkingContent.split('\n').map((line, index) => (
           <p key={index} className={index > 0 ? 'mt-2' : ''}>
             {line}

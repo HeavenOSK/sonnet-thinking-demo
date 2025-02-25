@@ -37,7 +37,7 @@ export function JsonResponseViewer({ contentBlocks }: JsonResponseViewerProps) {
   const formattedJson = JSON.stringify(contentBlocks, null, 2);
 
   return (
-    <div className="mt-3 rounded-lg border border-blue-200 bg-blue-50 p-3 dark:border-blue-900 dark:bg-blue-900/10">
+    <div className="mt-3 max-w-full rounded-lg border border-blue-200 bg-blue-50 p-3 dark:border-blue-900 dark:bg-blue-900/10">
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center font-medium text-blue-700 text-sm dark:text-blue-300">
           <svg
@@ -88,7 +88,7 @@ export function JsonResponseViewer({ contentBlocks }: JsonResponseViewerProps) {
       <div
         className={`overflow-auto rounded bg-gray-100 p-2 font-mono text-gray-800 text-xs dark:bg-gray-900 dark:text-gray-200 ${
           expanded ? 'max-h-96' : 'max-h-32'
-        }`}
+        } w-full`}
       >
         <pre>{formattedJson}</pre>
       </div>
