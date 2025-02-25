@@ -84,11 +84,12 @@ npm run lint:fix
 
 ### Anthropic API
 - モデル: claude-3-7-sonnet-20250219（最新の適切なモデル）
-- 最大トークン: 適切な値を設定
-- 温度: 適切な値を設定（デフォルト: 0.7）
-- トップP: 適切な値を設定（デフォルト: 0.9）
+- 最大トークン: 16000
+- 温度: 0.7（デフォルト値）
+- トップP: 0.9（デフォルト値）
 - Extended Thinking: 有効化
-  - budget_tokens: 16000（推奨値）
+  - budget_tokens: 4000
+  - max_tokensはbudget_tokensよりも大きい値に設定する必要がある
   - 複雑な推論タスクに対して拡張された思考能力を提供
   - thinking/redacted_thinkingブロックの適切な処理
 
