@@ -75,7 +75,7 @@ export function InputArea({
       <button
         onClick={handleSendMessage}
         disabled={disabled || loading || !message.trim()}
-        className="absolute right-3 bottom-3 rounded-full p-1 text-blue-600 transition-colors hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-50 dark:text-blue-400 dark:hover:bg-blue-900/20"
+        className="-translate-y-1/2 absolute top-1/2 right-3 rounded-full p-1 text-blue-600 transition-colors hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-50 dark:text-blue-400 dark:hover:bg-blue-900/20"
       >
         <SendIcon className="h-5 w-5" />
       </button>
