@@ -2,7 +2,6 @@ import { Anthropic } from '@anthropic-ai/sdk';
 import {
   AnthropicResponse,
   ContentBlock,
-  RedactedThinkingBlock,
   TextBlock,
   ThinkingBlock,
 } from '../../types';
@@ -50,6 +49,7 @@ export function getAnthropicClient(): Anthropic {
 
     anthropicClient = new Anthropic({
       apiKey,
+      dangerouslyAllowBrowser: true,
     });
   }
 
