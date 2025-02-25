@@ -10,7 +10,9 @@
     "lint:fix": "biome check --write . --unsafe"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.37.0",
     "@biomejs/biome": "^1.9.4",
+    "idb": "^8.0.2",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
