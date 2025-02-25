@@ -1,9 +1,11 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 import { Chat } from '../../types';
 import { ChatList } from './ChatList';
 import { NewChatButton } from './NewChatButton';
+import { SettingsIcon } from './icons';
 
 interface SidebarProps {
   chats: Chat[];
@@ -80,6 +82,17 @@ export function Sidebar({
           onUpdateChatTitle={onUpdateChatTitle}
           disabled={loading}
         />
+      </div>
+
+      {/* フッター（設定リンク） */}
+      <div className="border-gray-200 border-t p-4 dark:border-gray-800">
+        <Link
+          href="/settings"
+          className="flex items-center text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+        >
+          <SettingsIcon className="mr-2 h-5 w-5" />
+          <span>設定</span>
+        </Link>
       </div>
     </div>
   );

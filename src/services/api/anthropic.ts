@@ -33,7 +33,16 @@ let anthropicClient: Anthropic | null = null;
  */
 export function getAnthropicClient(): Anthropic {
   if (!anthropicClient) {
-    const apiKey = process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY;
+    // 環境変数またはローカルストレージからAPIキーを取得
+    let apiKey = process.env.NEXT_PUBLIC_ANTHROPIC_API_KEY;
+
+    // クライアントサイドの場合、ローカルストレージからAPIキーを取得
+    if (typeof window !== 'undefined') {
+      const storedApiKey = localStorage.getItem('anthropic-api-key');
+      if (storedApiKey) {
+        apiKey = storedApiKey;
+      }
+    }
 
     if (!apiKey) {
       throw new Error('Anthropic API Keyが設定されていません。');
