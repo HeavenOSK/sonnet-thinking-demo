@@ -14,7 +14,7 @@ const MODEL = 'claude-3-7-sonnet-20250219';
 /**
  * Thinking機能のトークン予算
  */
-const THINKING_BUDGET_TOKENS = 16000;
+const THINKING_BUDGET_TOKENS = 4000;
 
 /**
  * Anthropic APIのシステムプロンプト
@@ -84,7 +84,7 @@ export const anthropicService = {
         model: MODEL,
         messages,
         system: SYSTEM_PROMPT,
-        max_tokens: 4096,
+        max_tokens: 16000,
         temperature: 0.7,
         thinking: {
           type: 'enabled',
