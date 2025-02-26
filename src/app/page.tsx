@@ -39,6 +39,7 @@ export default function Home() {
           onCreateChat={createChat}
           onDeleteChat={deleteChat}
           onUpdateChatTitle={updateChatTitle}
+          isStreamMode={false}
         />
       }
       content={

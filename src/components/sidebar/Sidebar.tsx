@@ -3,18 +3,20 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { Chat } from '../../types';
+import { StreamChat } from '../../types/stream';
 import { ChatList } from './ChatList';
 import { NewChatButton } from './NewChatButton';
 import { SettingsIcon } from './icons';
 
 interface SidebarProps {
-  chats: Chat[];
+  chats: Chat[] | StreamChat[];
   currentChatId: string | null;
   loading: boolean;
   onSelectChat: (chatId: string) => void;
-  onCreateChat: (title: string) => Promise<Chat | null>;
+  onCreateChat: (title: string) => Promise<Chat | null | StreamChat | null>;
   onDeleteChat: (chatId: string) => Promise<void>;
   onUpdateChatTitle: (chatId: string, title: string) => Promise<void>;
+  isStreamMode?: boolean;
 }
 
 /**
@@ -29,6 +31,7 @@ export function Sidebar({
   onCreateChat,
   onDeleteChat,
   onUpdateChatTitle,
+  isStreamMode = false,
 }: SidebarProps) {
   const [isCreating, setIsCreating] = useState(false);
 
@@ -84,8 +87,34 @@ export function Sidebar({
         />
       </div>
 
+      {/* モード切り替えリンク */}
+      <div className="border-gray-200 border-t px-4 pt-4 dark:border-gray-800">
+        <div className="flex justify-between space-x-2">
+          <Link
+            href="/"
+            className={`flex-1 rounded-lg px-3 py-2 text-center text-sm ${
+              !isStreamMode
+                ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
+                : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
+            }`}
+          >
+            通常モード
+          </Link>
+          <Link
+            href="/stream"
+            className={`flex-1 rounded-lg px-3 py-2 text-center text-sm ${
+              isStreamMode
+                ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
+                : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
+            }`}
+          >
+            ストリームモード
+          </Link>
+        </div>
+      </div>
+
       {/* フッター（設定リンク） */}
-      <div className="border-gray-200 border-t p-4 dark:border-gray-800">
+      <div className="p-4">
         <Link
           href="/settings"
           className="flex items-center text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
