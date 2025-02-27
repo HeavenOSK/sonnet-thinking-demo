@@ -110,6 +110,8 @@ export const anthropicStreamService = {
 
       // ストリームからのイベントを処理
       for await (const event of stream) {
+        console.log(event)
+        console.table(event)
         if (event.type === 'content_block_start') {
           // content_block_startイベントの場合、新しいブロックを開始
           if ('content_block' in event && event.content_block) {
