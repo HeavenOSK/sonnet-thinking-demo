@@ -109,9 +109,14 @@ export const streamDbService = {
    */
   async getMessagesByStreamChat(chatId: string): Promise<StreamMessage[]> {
     const db = await initDB();
-    const messages = await db.getAllFromIndex(STORES.MESSAGES, 'chatId', chatId);
+    const messages = await db.getAllFromIndex(
+      STORES.MESSAGES,
+      'chatId',
+      chatId,
+    );
     return messages.sort(
-      (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
+      (a, b) =>
+        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
     );
   },
 

@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect } from 'react';
-import { StreamChatContainer } from '../../components/stream-chat/StreamChatContainer';
 import { MainLayout } from '../../components/layout/MainLayout';
 import { Sidebar } from '../../components/sidebar/Sidebar';
+import { StreamChatContainer } from '../../components/stream-chat/StreamChatContainer';
 import { useStreamChat } from '../../hooks/useStreamChat';
 
 export default function StreamPage() {

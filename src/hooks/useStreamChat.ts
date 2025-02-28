@@ -7,7 +7,9 @@ import { StreamChat, StreamMessage } from '../types/stream';
  */
 export function useStreamChat() {
   const [streamChats, setStreamChats] = useState<StreamChat[]>([]);
-  const [currentStreamChat, setCurrentStreamChat] = useState<StreamChat | null>(null);
+  const [currentStreamChat, setCurrentStreamChat] = useState<StreamChat | null>(
+    null,
+  );
   const [streamMessages, setStreamMessages] = useState<StreamMessage[]>([]);
   const [isStreaming, setIsStreaming] = useState<boolean>(false);
   const [streamingContent, setStreamingContent] = useState<string>('');
@@ -37,7 +39,8 @@ export function useStreamChat() {
   const fetchStreamMessages = useCallback(async (chatId: string) => {
     try {
       setIsStreaming(true);
-      const fetchedMessages = await streamChatService.getStreamChatMessages(chatId);
+      const fetchedMessages =
+        await streamChatService.getStreamChatMessages(chatId);
       setStreamMessages(fetchedMessages);
       setError(null);
     } catch (err) {
@@ -100,7 +103,10 @@ export function useStreamChat() {
     async (chatId: string, title: string) => {
       try {
         setIsStreaming(true);
-        const updatedChat = await streamChatService.updateStreamChatTitle(chatId, title);
+        const updatedChat = await streamChatService.updateStreamChatTitle(
+          chatId,
+          title,
+        );
         setStreamChats((prevChats) =>
           prevChats.map((chat) => (chat.id === chatId ? updatedChat : chat)),
         );
@@ -110,7 +116,9 @@ export function useStreamChat() {
         setError(null);
       } catch (err) {
         console.error('ストリーミングチャットタイトル更新エラー:', err);
-        setError('ストリーミングチャットタイトルの更新中にエラーが発生しました。');
+        setError(
+          'ストリーミングチャットタイトルの更新中にエラーが発生しました。',
+        );
       } finally {
         setIsStreaming(false);
       }
@@ -126,7 +134,9 @@ export function useStreamChat() {
       try {
         setIsStreaming(true);
         await streamChatService.deleteStreamChat(chatId);
-        setStreamChats((prevChats) => prevChats.filter((chat) => chat.id !== chatId));
+        setStreamChats((prevChats) =>
+          prevChats.filter((chat) => chat.id !== chatId),
+        );
         if (currentStreamChat?.id === chatId) {
           setCurrentStreamChat(null);
           setStreamMessages([]);
@@ -160,7 +170,7 @@ export function useStreamChat() {
 
         // ユーザーメッセージをUIに追加
         const userMessage: StreamMessage = {
-          id: 'temp-user-' + Date.now(),
+          id: `temp-user-${Date.now()}`,
           chatId: currentStreamChat.id,
           role: 'user',
           content: message,

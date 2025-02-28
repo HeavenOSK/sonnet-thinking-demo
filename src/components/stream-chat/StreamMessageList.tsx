@@ -41,7 +41,10 @@ export function StreamMessageList({
           ) : (
             <StreamAIMessage
               message={message}
-              isLastMessage={message.id === messages[messages.length - 1]?.id && messages[messages.length - 1]?.role === 'assistant'}
+              isLastMessage={
+                message.id === messages[messages.length - 1]?.id &&
+                messages[messages.length - 1]?.role === 'assistant'
+              }
             />
           )}
         </div>

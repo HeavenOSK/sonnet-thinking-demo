@@ -47,15 +47,21 @@ export function StreamChatContainer({
       <div className="border-gray-200 border-b bg-white p-4 dark:border-gray-800 dark:bg-gray-950">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold text-gray-900 text-lg dark:text-white">
-            {chatId ? 'ストリーミングチャット' : 'チャットを選択または作成してください'}
+            {chatId
+              ? 'ストリーミングチャット'
+              : 'チャットを選択または作成してください'}
           </h2>
           <div className="flex items-center space-x-2">
-            <span className="text-xs text-gray-500 dark:text-gray-400">
+            <span className="text-gray-500 text-xs dark:text-gray-400">
               ストリーミングモード
             </span>
-            <span className="flex h-2 w-2 relative">
-              <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${isStreaming ? 'bg-green-400' : 'bg-blue-400'} opacity-75`}></span>
-              <span className={`relative inline-flex rounded-full h-2 w-2 ${isStreaming ? 'bg-green-500' : 'bg-blue-500'}`}></span>
+            <span className="relative flex h-2 w-2">
+              <span
+                className={`absolute inline-flex h-full w-full animate-ping rounded-full ${isStreaming ? 'bg-green-400' : 'bg-blue-400'} opacity-75`}
+              />
+              <span
+                className={`relative inline-flex h-2 w-2 rounded-full ${isStreaming ? 'bg-green-500' : 'bg-blue-500'}`}
+              />
             </span>
           </div>
         </div>
@@ -110,7 +116,7 @@ export function StreamChatContainer({
               <p>
                 サイドバーからチャットを選択するか、新しいチャットを作成してください。
               </p>
-              <p className="mt-4 text-sm text-blue-500">
+              <p className="mt-4 text-blue-500 text-sm">
                 ストリーミングモードでは、AIの応答をリアルタイムで表示します。
               </p>
             </div>

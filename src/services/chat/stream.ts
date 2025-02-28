@@ -111,7 +111,8 @@ export const streamChatService = {
 
     try {
       // 過去のメッセージを取得して会話履歴を構築
-      const previousMessages = await streamDbService.getMessagesByStreamChat(chatId);
+      const previousMessages =
+        await streamDbService.getMessagesByStreamChat(chatId);
       const conversationHistory = previousMessages
         .filter((msg) => msg.id !== userMessageObj.id) // 今送信したメッセージを除外
         .map((msg) => {
@@ -148,8 +149,12 @@ export const streamChatService = {
         },
         onComplete: async (contentBlocks: StreamContentBlock[]) => {
           // ストリーミング完了時にメッセージを更新
-          const textContent = anthropicStreamService.extractTextFromContentBlocks(contentBlocks);
-          const thinkingContent = anthropicStreamService.extractThinkingFromContentBlocks(contentBlocks);
+          const textContent =
+            anthropicStreamService.extractTextFromContentBlocks(contentBlocks);
+          const thinkingContent =
+            anthropicStreamService.extractThinkingFromContentBlocks(
+              contentBlocks,
+            );
 
           const completedMessage: StreamMessage = {
             ...assistantMessage,

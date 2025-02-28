@@ -110,8 +110,8 @@ export const anthropicStreamService = {
 
       // ストリームからのイベントを処理
       for await (const event of stream) {
-        console.log(event)
-        console.table(event)
+        console.log(event);
+        console.table(event);
         if (event.type === 'content_block_start') {
           // content_block_startイベントの場合、新しいブロックを開始
           if ('content_block' in event && event.content_block) {
@@ -177,7 +177,9 @@ export const anthropicStreamService = {
   /**
    * コンテンツブロックからthinking部分のみを抽出
    */
-  extractThinkingFromContentBlocks(contentBlocks: StreamContentBlock[]): string {
+  extractThinkingFromContentBlocks(
+    contentBlocks: StreamContentBlock[],
+  ): string {
     const thinkingBlocks = contentBlocks.filter(
       (block): block is StreamThinkingBlock => block.type === 'thinking',
     );

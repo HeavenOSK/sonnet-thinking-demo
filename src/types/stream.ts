@@ -39,7 +39,10 @@ export type NewStreamMessage = Omit<StreamMessage, 'id' | 'timestamp'>;
 /**
  * ストリーミングコンテンツブロック型
  */
-export type StreamContentBlock = StreamTextBlock | StreamThinkingBlock | StreamRedactedThinkingBlock;
+export type StreamContentBlock =
+  | StreamTextBlock
+  | StreamThinkingBlock
+  | StreamRedactedThinkingBlock;
 
 /**
  * ストリーミングテキストブロック型

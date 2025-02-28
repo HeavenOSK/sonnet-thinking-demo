@@ -7,7 +7,9 @@ interface StreamThinkingSectionProps {
 /**
  * ストリーミング思考プロセス表示セクションコンポーネント
  */
-export function StreamThinkingSection({ thinking }: StreamThinkingSectionProps) {
+export function StreamThinkingSection({
+  thinking,
+}: StreamThinkingSectionProps) {
   if (!thinking) {
     return null;
   }

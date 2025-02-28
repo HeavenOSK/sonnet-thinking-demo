@@ -26,7 +26,7 @@ export function StreamAIMessage({
 
   // メッセージ内容
   const content = isStreaming ? streamingContent : message?.content || '';
-  
+
   // thinking部分
   const thinking = isStreaming ? streamingThinking : message?.thinking || '';
 
@@ -71,10 +71,12 @@ export function StreamAIMessage({
               {line}
             </p>
           ))}
-          
+
           {/* ストリーミング中の場合、タイピングインジケーターを表示 */}
           {isStreaming && (
-            <span className="ml-1 inline-block h-4 w-2 animate-pulse bg-purple-500">&nbsp;</span>
+            <span className="ml-1 inline-block h-4 w-2 animate-pulse bg-purple-500">
+              &nbsp;
+            </span>
           )}
 
           {/* ボタン表示エリア */}

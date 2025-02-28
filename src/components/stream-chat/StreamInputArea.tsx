@@ -104,10 +104,10 @@ export function StreamInputArea({
           </svg>
         </button>
       </div>
-      <div className="mt-2 text-right text-xs text-gray-500 dark:text-gray-400">
+      <div className="mt-2 text-right text-gray-500 text-xs dark:text-gray-400">
         {isStreaming ? (
           <span className="flex items-center justify-end">
-            <span className="mr-1 h-2 w-2 rounded-full bg-green-500"></span>
+            <span className="mr-1 h-2 w-2 rounded-full bg-green-500" />
             ストリーミング中...
           </span>
         ) : (
