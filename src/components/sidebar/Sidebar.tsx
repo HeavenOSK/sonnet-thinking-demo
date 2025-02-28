@@ -87,32 +87,6 @@ export function Sidebar({
         />
       </div>
 
-      {/* モード切り替えリンク */}
-      <div className="border-gray-200 border-t px-4 pt-4 dark:border-gray-800">
-        <div className="flex justify-between space-x-2">
-          <Link
-            href="/"
-            className={`flex-1 rounded-lg px-3 py-2 text-center text-sm ${
-              !isStreamMode
-                ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
-                : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
-            }`}
-          >
-            通常モード
-          </Link>
-          <Link
-            href="/stream"
-            className={`flex-1 rounded-lg px-3 py-2 text-center text-sm ${
-              isStreamMode
-                ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
-                : 'text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
-            }`}
-          >
-            ストリームモード
-          </Link>
-        </div>
-      </div>
-
       {/* フッター（設定リンク） */}
       <div className="p-4">
         <Link
