@@ -1,29 +1,31 @@
 'use client';
 
 import { useEffect } from 'react';
-import { ChatContainer } from '../components/chat/ChatContainer';
 import { MainLayout } from '../components/layout/MainLayout';
 import { Sidebar } from '../components/sidebar/Sidebar';
-import { useChat } from '../hooks/useChat';
+import { StreamChatContainer } from '../components/stream-chat/StreamChatContainer';
+import { useStreamChat } from '../hooks/useStreamChat';
 
-export default function Home() {
+export default function StreamPage() {
   const {
-    chats,
-    currentChat,
-    messages,
-    loading,
+    streamChats,
+    currentStreamChat,
+    streamMessages,
+    isStreaming,
+    streamingContent,
+    streamingThinking,
     error,
-    createChat,
-    selectChat,
-    updateChatTitle,
-    deleteChat,
-    sendMessage,
-  } = useChat();
+    createStreamChat,
+    selectStreamChat,
+    updateStreamChatTitle,
+    deleteStreamChat,
+    sendStreamMessage,
+  } = useStreamChat();
 
   // エラーハンドリング
   useEffect(() => {
     if (error) {
-      console.error('エラー:', error);
+      console.error('ストリーミングエラー:', error);
       // エラーメッセージを表示する処理を追加
     }
   }, [error]);
@@ -32,22 +34,24 @@ export default function Home() {
     <MainLayout
       sidebar={
         <Sidebar
-          chats={chats}
-          currentChatId={currentChat?.id || null}
-          loading={loading}
-          onSelectChat={selectChat}
-          onCreateChat={createChat}
-          onDeleteChat={deleteChat}
-          onUpdateChatTitle={updateChatTitle}
-          isStreamMode={false}
+          chats={streamChats}
+          currentChatId={currentStreamChat?.id || null}
+          loading={isStreaming}
+          onSelectChat={selectStreamChat}
+          onCreateChat={createStreamChat}
+          onDeleteChat={deleteStreamChat}
+          onUpdateChatTitle={updateStreamChatTitle}
+          isStreamMode={true}
         />
       }
       content={
-        <ChatContainer
-          chatId={currentChat?.id || null}
-          messages={messages}
-          loading={loading}
-          onSendMessage={sendMessage}
+        <StreamChatContainer
+          chatId={currentStreamChat?.id || null}
+          messages={streamMessages}
+          streamingContent={streamingContent}
+          streamingThinking={streamingThinking}
+          isStreaming={isStreaming}
+          onSendMessage={sendStreamMessage}
         />
       }
     />
