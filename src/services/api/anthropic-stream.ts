@@ -1,9 +1,8 @@
 import { Anthropic } from '@anthropic-ai/sdk';
 import {
   StreamContentBlock,
-  StreamDelta,
   StreamTextBlock,
-  StreamThinkingBlock,
+  StreamThinkingBlock
 } from '../../types/stream';
 
 /**
@@ -112,42 +111,65 @@ export const anthropicStreamService = {
       for await (const event of stream) {
         console.log(event);
         console.table(event);
-        if (event.type === 'content_block_start') {
-          // content_block_startイベントの場合、新しいブロックを開始
-          if ('content_block' in event && event.content_block) {
-            const contentBlock = event.content_block;
-            if (contentBlock.type === 'text') {
+        
+        switch (event.type) {
+          case 'content_block_start':
+            // content_block_startイベントの場合、新しいブロックを開始
+            if ('content_block' in event && event.content_block) {
+              const contentBlock = event.content_block;
+              
+              switch (contentBlock.type) {
+                case 'text':
+                  currentTextBlock = { type: 'text', text: '' };
+                  break;
+                case 'thinking':
+                  currentThinkingBlock = {
+                    type: 'thinking',
+                    thinking: contentBlock.thinking,
+                    signature: contentBlock.signature,
+                  };
+                  break;
+              }
+            }
+            break;
+            
+          case 'content_block_delta':
+            switch (event.delta.type) {
+              case 'text_delta':
+                currentTextBlock.text += event.delta.text;
+                handlers.onTextDelta?.(event.delta.text);
+                break;
+                
+              case 'thinking_delta':
+                if (currentThinkingBlock) {
+                  currentThinkingBlock.thinking += event.delta.thinking;
+                  handlers.onThinkingDelta?.(event.delta.thinking);
+                }
+                break;
+                
+              case 'signature_delta':
+                if (currentThinkingBlock) {
+                  currentThinkingBlock.signature = event.delta.signature;
+                }
+                break;
+            }
+            break;
+            
+          case 'content_block_stop':
+            // content_block_stopイベントの場合、現在のブロックを配列に追加
+            if (currentTextBlock.text) {
+              contentBlocks.push(currentTextBlock);
               currentTextBlock = { type: 'text', text: '' };
-            } else if (contentBlock.type === 'thinking') {
-              currentThinkingBlock = {
-                type: 'thinking',
-                thinking: '',
-                signature: contentBlock.signature,
-              };
             }
-          }
-        } else if (event.type === 'content_block_delta') {
-          if (event.delta.type === 'text_delta') {
-            currentTextBlock.text += event.delta.text;
-            handlers.onTextDelta?.(event.delta.text);
-          } else if (event.delta.type === 'thinking_delta') {
             if (currentThinkingBlock) {
-              currentThinkingBlock.thinking += event.delta.thinking;
-              handlers.onThinkingDelta?.(event.delta.thinking);
+              contentBlocks.push(currentThinkingBlock);
+              currentThinkingBlock = null;
             }
-          }
-        } else if (event.type === 'content_block_stop') {
-          // content_block_stopイベントの場合、現在のブロックを配列に追加
-          if (currentTextBlock.text) {
-            contentBlocks.push(currentTextBlock);
-            currentTextBlock = { type: 'text', text: '' };
-          }
-          if (currentThinkingBlock) {
-            contentBlocks.push(currentThinkingBlock);
-            currentThinkingBlock = null;
-          }
-        } else if (event.type === 'message_stop') {
-          handlers.onComplete?.(contentBlocks);
+            break;
+            
+          case 'message_stop':
+            handlers.onComplete?.(contentBlocks);
+            break;
         }
       }
 
