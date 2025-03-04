@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
-import { ChatContainer } from '../components/chat/ChatContainer';
-import { MainLayout } from '../components/layout/MainLayout';
-import { Sidebar } from '../components/sidebar/Sidebar';
-import { useChat } from '../hooks/useChat';
+import { ChatContainer } from '../../components/chat/ChatContainer';
+import { MainLayout } from '../../components/layout/MainLayout';
+import { Sidebar } from '../../components/sidebar/Sidebar';
+import { useChat } from '../../hooks/useChat';
 
 export default function Home() {
   const {
