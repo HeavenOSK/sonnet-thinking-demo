@@ -6,7 +6,7 @@ import { Chat } from '../../types';
 import { StreamChat } from '../../types/stream';
 import { ChatList } from './ChatList';
 import { NewChatButton } from './NewChatButton';
-import { SettingsIcon } from './icons';
+import { NonStreamIcon, SettingsIcon, StreamIcon } from './icons';
 
 interface SidebarProps {
   chats: Chat[] | StreamChat[];
@@ -87,8 +87,25 @@ export function Sidebar({
         />
       </div>
 
-      {/* フッター（設定リンク） */}
-      <div className="p-4">
+      {/* フッター（設定リンクとモード切替リンク） */}
+      <div className="p-4 flex flex-col space-y-2">
+        {isStreamMode ? (
+          <Link
+            href="/non-stream"
+            className="flex items-center text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+          >
+            <NonStreamIcon className="mr-2 h-5 w-5" />
+            <span>非ストリームモードに切替</span>
+          </Link>
+        ) : (
+          <Link
+            href="/"
+            className="flex items-center text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+          >
+            <StreamIcon className="mr-2 h-5 w-5" />
+            <span>ストリームモードに切替</span>
+          </Link>
+        )}
         <Link
           href="/settings"
           className="flex items-center text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
